@@ -11,7 +11,7 @@ interface UseCrudOptions<T extends { id: number }> {
     delete?: (id: number) => Promise<void>;
 }
 
-export const useCrud = <T,>(options: UseCrudOptions<T>) => {
+export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) => {
     const [data, setData] = useState<T[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);

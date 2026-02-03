@@ -1,8 +1,11 @@
 import { API_BASE_URL } from '../utils/constants';
 
 class ApiError extends Error {
-    constructor(public response: Response) {
+    response: Response;
+
+    constructor(response: Response) {
         super("ApiError: " + response.status);
+        this.response = response;
     }
 }
 
