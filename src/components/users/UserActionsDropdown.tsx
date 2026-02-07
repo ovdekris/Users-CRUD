@@ -78,14 +78,14 @@ const UserActionsDropdown = ({user, onDetails, onEdit, onDelete, onViewPosts}: U
     }
 
     return (
-        <div onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined} onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined} className="relative">
+        <div onMouseEnter={!isMobile ? () => setIsOpen(true) : undefined} onMouseLeave={!isMobile ? () => setIsOpen(false) : undefined} className="relative w-4/5 h-full text-center flex justify-center">
             <button ref={buttonRef} onClick={toggleDropdown} className="flex flex-row gap-1 desktop:flex-col cursor-pointer desktop:gap-1 p-1 rounded-md transition duration-200 z-10" aria-label="User actions">
                 <div className="w-1 h-1 rounded-full bg-[#0e0eef] group-hover:bg-white transition duration-300"></div>
                 <div className="w-1 h-1 rounded-full bg-[#0e0eef] group-hover:bg-white transition duration-300"></div>
                 <div className="w-1 h-1 rounded-full bg-[#0e0eef] group-hover:bg-white transition duration-300"></div>
             </button>
             {isOpen && (
-                <div className="absolute desktop:right-4 right-7 top-0 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
+                <div className="absolute desktop:right-[calc(50%+10px)] right-7 top-2 mt-1 w-40 bg-white rounded-lg shadow-lg border border-gray-100 py-1 z-50">
                     {onViewPosts && (
                         <button  onClick={handleViewPosts} className="w-full cursor-pointer text-left px-4 py-2 text-sm text-gray-700 hover:bg-[#f0f0ff] hover:text-[#0e0eef] transition duration-150 flex items-center gap-2 ">
                             <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
