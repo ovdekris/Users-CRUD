@@ -92,43 +92,47 @@ export const UserList = () => {
                         <div className="p-3 font-semibold text-center">Action</div>
                     </div>
                     <div id="users" className="grid grid-cols-1 mobile:grid-cols-2 gap-2 desktop:block desktop:gap-0">
-                        {users.map((user: User) => (
-                            <div key={user.id}
-                                 className="group relative flex flex-col desktop:grid desktop:grid-cols-5 drop-shadow-md p-4 desktop:py-2.5 desktop:p-0 bg-white rounded-xl mb-2.5 cursor-pointer hover:bg-[#0e0eef] hover:z-10 transition duration-300 ease">
-                                <div className="desktop:p-3">
-                                    <span className="text-xs text-gray-400 desktop:hidden">Name</span>
-                                    <span
-                                        className="text-l font-semibold text-black group-hover:text-white transition duration-300 block">{user.name}</span>
-                                </div>
-                                <div className="desktop:p-3">
-                                    <span className="text-xs text-gray-400 desktop:hidden">Email</span>
-                                    <p className="text-gray-500 group-hover:text-white transition duration-300 ease">{user.email}</p>
-                                </div>
-                                <div className="desktop:p-3">
-                                    <span className="text-xs text-gray-400 desktop:hidden">City</span>
-                                    <p className="text-gray-500 group-hover:text-white transition duration-300 ease">{user.address.city}</p>
-                                </div>
-                                <div className="desktop:p-3">
-                                    <span className="text-xs text-gray-400 desktop:hidden">Firm</span>
-                                    <p className="text-gray-500 group-hover:text-white transition duration-300 ease">{user.company.name}</p>
-                                </div>
+                        {users.length === 0 ? (
+                            <div>No users</div>
+                        ) : (users.map((user: User) => (
+                                    <div key={user.id}
+                                         className="group relative flex flex-col desktop:grid desktop:grid-cols-5 drop-shadow-md p-4 desktop:py-2.5 desktop:p-0 bg-white rounded-xl mb-2.5 cursor-pointer hover:bg-[#0e0eef] hover:z-10 transition duration-300 ease">
+                                        <div className="desktop:p-3">
+                                            <span className="text-xs text-gray-400 desktop:hidden">Name</span>
+                                            <span
+                                                className="text-l font-semibold text-black group-hover:text-white transition duration-300 block">{user.name}</span>
+                                        </div>
+                                        <div className="desktop:p-3">
+                                            <span className="text-xs text-gray-400 desktop:hidden">Email</span>
+                                            <p className="text-gray-500 group-hover:text-white transition duration-300 ease">{user.email}</p>
+                                        </div>
+                                        <div className="desktop:p-3">
+                                            <span className="text-xs text-gray-400 desktop:hidden">City</span>
+                                            <p className="text-gray-500 h-full inline-flex items-center group-hover:text-white transition duration-300 ease">{user.address.city}</p>
+                                        </div>
+                                        <div className="desktop:p-3">
+                                            <span className="text-xs text-gray-400 desktop:hidden">Firm</span>
+                                            <p className="text-gray-500 group-hover:text-white transition duration-300 ease">{user.company.name}</p>
+                                        </div>
 
-                                <div className="desktop:p-3 desktop:flex desktop:items-center desktop:justify-center max-[978px]:absolute max-[978px]:right-[20px] max-[978px]:top-[20px]">
-                                    <UserActionsDropdown user={user} onEdit={() => handleEditUser(user.id)}
-                                        onDelete={handleDeleteClick}
-                                        onViewPosts={handleViewPosts}
-                                        onDetails={handleDetailsClick}
-                                    />
-                                </div>
-                            </div>
-                        ))}
+                                        <div className="desktop:p-3 desktop:flex desktop:items-center desktop:justify-center max-[978px]:absolute max-[978px]:right-[20px] max-[978px]:top-[20px]">
+                                            <UserActionsDropdown user={user} onEdit={() => handleEditUser(user.id)}
+                                                                 onDelete={handleDeleteClick}
+                                                                 onViewPosts={handleViewPosts}
+                                                                 onDetails={handleDetailsClick}/>
+                                        </div>
+                                    </div>
+                                )))
+                        }
                     </div>
                 </div>
             </div>
 
-            <DeleteUserModal user={deleteModal.modalData} isOpen={deleteModal.isOpen} onClose={deleteModal.close} onConfirm={handleConfirmDelete}/>
+            <DeleteUserModal user={deleteModal.modalData} isOpen={deleteModal.isOpen} onClose={deleteModal.close}
+                             onConfirm={handleConfirmDelete}/>
             <UserDetailsModal user={detailsModal.modalData} isOpen={detailsModal.isOpen} onClose={detailsModal.close}/>
-            <UserFormModal user={editingUser} isOpen={formModal.isOpen} onClose={formModal.close} onSubmit={handleFormSubmit}/>
+            <UserFormModal user={editingUser} isOpen={formModal.isOpen} onClose={formModal.close}
+                           onSubmit={handleFormSubmit}/>
         </div>
     </>
 }

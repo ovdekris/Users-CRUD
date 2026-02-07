@@ -79,7 +79,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
             success(MESSAGES.SUCCESS.USER_UPDATED);
             return updatedItem;
         } catch (err) {
-            handleError(err, MESSAGES.ERROR.CREATE_FAILED);
+            handleError(err, MESSAGES.ERROR.UPDATE_FAILED);
             throw err;
         } finally {
             setLoading(false);

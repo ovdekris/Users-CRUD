@@ -1,49 +1,81 @@
 const CACHE_PREFIX = 'app_cache_';
+const DEFAULT_TTL_MS = 3 * 60 * 1000;
+
+interface CacheItem<T> {
+    data: T;
+    timestamp: number;
+    ttl: number;
+}
 
 export const cacheService = {
     get: <T>(key: string): T | null => {
         try {
             const item = localStorage.getItem(CACHE_PREFIX + key);
             if (!item) return null;
-            return JSON.parse(item) as T;
+
+            const cached = JSON.parse(item) as CacheItem<T>;
+
+            if (cacheService.isExpired(cached)) {
+                cacheService.remove(key);
+                return null;
+            }
+
+            return cached.data;
         } catch {
             return null;
         }
     },
 
-    set: <T>(key: string, data: T): void => {
+    set: <T>(key: string, data: T, ttlMs: number = DEFAULT_TTL_MS): void => {
         try {
-            localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(data));
+            const cacheItem: CacheItem<T> = {
+                data,
+                timestamp: Date.now(),
+                ttl: ttlMs,
+            };
+            localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(cacheItem));
         } catch (error) {
             console.error('Error caching data:', error);
         }
     },
 
-    remove: (key: string): void => {
-        localStorage.removeItem(CACHE_PREFIX + key);
+    isExpired: <T>(cached: CacheItem<T>): boolean => {
+        return Date.now() - cached.timestamp > cached.ttl;
     },
 
-    clear: (): void => {
-        Object.keys(localStorage)
-            .filter(key => key.startsWith(CACHE_PREFIX))
-            .forEach(key => localStorage.removeItem(key));
+    remove: (key: string): void => {
+        localStorage.removeItem(CACHE_PREFIX + key);
     }
 };
 
+interface WithCacheOptions {
+    ttlMs?: number;
+    forceRefresh?: boolean;
+}
+
 export const withCache = async <T>(
     key: string,
-    fetcher: () => Promise<T>
+    fetcher: () => Promise<T>,
+    options: WithCacheOptions = {}
 ): Promise<T> => {
+    const { ttlMs, forceRefresh = false } = options;
+
+    if (!forceRefresh) {
+        const cached = cacheService.get<T>(key);
+        if (cached && navigator.onLine) {
+            fetcher().then(data => cacheService.set(key, data, ttlMs)).catch(() => {});
+            return cached;
+        }
+    }
+
     try {
         const data = await fetcher();
-        cacheService.set(key, data);
+        cacheService.set(key, data, ttlMs);
         return data;
     } catch (error) {
-        if (!navigator.onLine) {
-            const cached = cacheService.get<T>(key);
-            if (cached) {
-                return cached;
-            }
+        const cached = cacheService.get<T>(key);
+        if (cached) {
+            return cached;
         }
         throw error;
     }
