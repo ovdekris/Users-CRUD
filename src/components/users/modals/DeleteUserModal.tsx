@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import type {User} from "../../../types/user.ts";
 import {Loader} from "../../common/Loader.tsx";
 
+//Interface for Delete user
 interface DeleteUserModalProps {
     user: User | null;
     isOpen: boolean;
@@ -10,6 +11,7 @@ interface DeleteUserModalProps {
     onConfirm: () => void;
 }
 
+//Function for Delete user
 export const DeleteUserModal = ({
     user,
     isOpen,

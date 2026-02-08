@@ -1,10 +1,12 @@
 import { Component } from 'react';
 import type { ErrorInfo, ReactNode } from 'react';
 
+//Definition of types for component props
 interface ErrorBoundaryProps {
     children: ReactNode;
 }
 
+//Component status definition
 interface ErrorBoundaryState {
     hasError: boolean;
     error: Error | null;

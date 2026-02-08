@@ -5,6 +5,7 @@ interface PostCardProps {
     onClick?: () => void;
 }
 
+//Create a post card
 export const PostCard = ({ post, onClick }: PostCardProps) => {
     return (
         <div key={post.id} onClick={onClick} className="group bg-white cursor-pointer rounded-xl p-5  hover:bg-[#0e0eef] hover:z-10 shadow-md transition duration-300">

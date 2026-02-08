@@ -1,5 +1,6 @@
 import { API_BASE_URL } from '../utils/constants';
 
+//Error handling
 class ApiError extends Error {
     response: Response;
 
@@ -9,6 +10,7 @@ class ApiError extends Error {
     }
 }
 
+//Universal function for making HTTP requests to APIs
 export const jsonApiInstance = async <T>(
     url: string,
     init?: RequestInit & { json?: unknown }

@@ -9,6 +9,7 @@ interface UserActionsDropdownProps {
     onViewPosts?: (userId: number) => void;
 }
 
+//Function management dropdown
 const UserActionsDropdown = ({user, onDetails, onEdit, onDelete, onViewPosts}: UserActionsDropdownProps) => {
     const [isOpen, setIsOpen] = useState(false);
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 978);

@@ -1,5 +1,6 @@
 import { useOffline } from "../../context/OfflineContext.tsx";
 
+//Offline mode
 export const OfflineBanner = () => {
     const { isOnline } = useOffline();
 

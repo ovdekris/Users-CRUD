@@ -14,12 +14,8 @@ import {UserDetailsModal} from "./modals/UserDetailsModal.tsx";
 import {UserFormModal} from "./modals/UserFormModal.tsx";
 import type {UserFormData} from "../../types/user.ts";
 
-const BuggyButton = () => {
-    const [crash, setCrash] = useState(false);
-    if (crash) throw new Error('Test Error Boundary!');
-    return <button onClick={() => setCrash(true)}>Crash App</button>;
-};
 
+//Create user List
 export const UserList = () => {
     const navigate = useNavigate();
     const {data: users, loading, error, fetchAll, createItem, updateItem, deleteItem} = useCrud<User>({
@@ -134,7 +130,6 @@ export const UserList = () => {
                     </div>
                 </div>
             </div>
-            <BuggyButton/>
 
             <DeleteUserModal user={deleteModal.modalData} isOpen={deleteModal.isOpen} onClose={deleteModal.close}
                              onConfirm={handleConfirmDelete}/>

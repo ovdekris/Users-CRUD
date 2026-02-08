@@ -1,13 +1,16 @@
 import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
 
+//Type notification
 export type NotificationType = 'success' | 'error' | 'info' | 'warning';
 
+//Interface notification
 export interface Notification {
     id: string;
     message: string;
     type: NotificationType;
 }
 
+//Context type — defines what will be available globally
 interface NotificationContextType {
     notifications: Notification[];
     success: (message: string) => void;
@@ -17,11 +20,13 @@ interface NotificationContextType {
     removeNotification: (id: string) => void;
 }
 
+//Create context
 const NotificationContext = createContext<NotificationContextType | null>(null);
 
 export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
 
+    //Function adding a new notification
     const addNotification = useCallback((message: string, type: NotificationType) => {
         const id = Date.now().toString();
         const notification: Notification = { id, message, type };
@@ -33,6 +38,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
         }, 3000);
     }, []);
 
+    //Function remove a notification
     const removeNotification = useCallback((id: string) => {
         setNotifications((prev) => prev.filter((n) => n.id !== id));
     }, []);
@@ -53,6 +59,7 @@ export const NotificationProvider = ({ children }: { children: ReactNode }) => {
     );
 };
 
+//Custom hook for convenient use of context
 export const useNotificationContext = () => {
     const context = useContext(NotificationContext);
     if (!context) {

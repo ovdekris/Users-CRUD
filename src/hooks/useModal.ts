@@ -1,5 +1,6 @@
 import { useState, useCallback } from 'react';
 
+//Hook for modal
 export const useModal = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [modalData, setModalData] = useState<any>(null);

@@ -10,6 +10,7 @@ interface CommentsModalProps {
     onClose: () => void;
 }
 
+//Create comment modal
 export const CommentsModal = ({ post, isOpen, onClose }: CommentsModalProps) => {
     const [comments, setComments] = useState<Comment[]>([]);
     const [loading, setLoading] = useState(false);

@@ -1,12 +1,14 @@
 import { useEffect } from "react";
 import type { User } from "../../../types/user.ts";
 
+//Interface for user
 interface UserDetailsModalProps {
     user: User | null;
     isOpen: boolean;
     onClose: () => void;
 }
 
+//Modal for user details
 export const UserDetailsModal = ({ user, isOpen, onClose }: UserDetailsModalProps) => {
     useEffect(() => {
         const handleEscape = (e: KeyboardEvent) => {

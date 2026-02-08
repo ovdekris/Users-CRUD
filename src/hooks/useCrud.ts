@@ -3,6 +3,7 @@ import {useNotification} from "./useNotification.ts";
 import {ApiError} from "../api/apiClient.ts";
 import {MESSAGES} from "../utils/constants.ts";
 
+//Interface Api
 interface UseCrudOptions<T extends { id: number }> {
     getAll?: () => Promise<T[]>;
     getById?: (id: number) => Promise<T>;
@@ -17,6 +18,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
     const [error, setError] = useState<string | null>(null);
     const { success, error: showError } = useNotification();
 
+    //Universal error handling function
     const handleError = (err: unknown, defaultMessage: string) => {
         let errorMessage = defaultMessage;
 
@@ -30,6 +32,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
         showError(errorMessage);
     }
 
+    //Retrieves all items from the API and saves them to local state
     const fetchAll = async () => {
         if (!options.getAll) return;
 
@@ -46,6 +49,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
         }
     }
 
+    //Create user
     const createItem = async (itemData: any) => {
         if (!options.create) return;
 
@@ -65,6 +69,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
         }
     }
 
+    //Uodate user
     const updateItem = async (id: number, itemData: any) => {
         if (!options.update) return;
 
@@ -86,6 +91,7 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
         }
     }
 
+    //Delete user
     const deleteItem = async (id: number) => {
         if (!options.delete) return;
 
@@ -106,5 +112,4 @@ export const useCrud = <T extends { id: number }>(options: UseCrudOptions<T>) =>
 
 
     return {data, loading, error, fetchAll, createItem, updateItem, deleteItem}
-
 }

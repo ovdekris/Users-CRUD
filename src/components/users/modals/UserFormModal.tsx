@@ -5,6 +5,7 @@ import type { User, UserFormData } from "../../../types/user.ts";
 import { defaultUserFormData } from "../../../types/user.ts";
 import { userSchema } from "../../../schemas/userSchema.ts";
 
+//Interface for user edit/add
 interface UserFormModalProps {
     user?: User | null;
     isOpen: boolean;
@@ -13,6 +14,7 @@ interface UserFormModalProps {
     onSubmit: (data: UserFormData) => void;
 }
 
+//Function for user edit/add
 export const UserFormModal = ({ user, isOpen, isLoading = false, onClose, onSubmit }: UserFormModalProps) => {
     const isEditMode = !!user;
 

@@ -1,6 +1,9 @@
+//Prefix for localstorage
 const CACHE_PREFIX = 'app_cache_';
-const DEFAULT_TTL_MS = 3 * 60 * 1000;
+//Default cache lifetime
+const DEFAULT_TTL_MS = 5 * 60 * 1000;
 
+//Structure of a single cache entry
 interface CacheItem<T> {
     data: T;
     timestamp: number;
@@ -8,6 +11,7 @@ interface CacheItem<T> {
 }
 
 export const cacheService = {
+    //Get data of cache
     get: <T>(key: string): T | null => {
         try {
             const item = localStorage.getItem(CACHE_PREFIX + key);
@@ -26,6 +30,7 @@ export const cacheService = {
         }
     },
 
+    //Set data of cache
     set: <T>(key: string, data: T, ttlMs: number = DEFAULT_TTL_MS): void => {
         try {
             const cacheItem: CacheItem<T> = {
@@ -39,20 +44,24 @@ export const cacheService = {
         }
     },
 
+    //Checks if a cache entry is expired
     isExpired: <T>(cached: CacheItem<T>): boolean => {
         return Date.now() - cached.timestamp > cached.ttl;
     },
 
+    //Remove data of cache
     remove: (key: string): void => {
         localStorage.removeItem(CACHE_PREFIX + key);
     }
 };
 
+//Configuration options for withCache
 interface WithCacheOptions {
     ttlMs?: number;
     forceRefresh?: boolean;
 }
 
+//Wrapper for fetcher with cache and offline support
 export const withCache = async <T>(
     key: string,
     fetcher: () => Promise<T>,

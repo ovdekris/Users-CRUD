@@ -7,6 +7,7 @@ const typeStyles = {
     warning: "bg-yellow-500",
 };
 
+//Notification ux
 export const NotificationContainer = () => {
     const { notifications } = useNotificationContext();
 

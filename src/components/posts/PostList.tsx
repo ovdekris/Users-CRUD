@@ -11,6 +11,7 @@ import { PostCard } from "./PostCard.tsx";
 import { CommentsModal } from "./modals/CommentsModal.tsx";
 import { useModal } from "../../hooks/useModal.ts";
 
+//Create post list
 export const PostList = () => {
     const { id } = useParams<{ id: string }>();
     const userId = Number(id);
@@ -32,7 +33,7 @@ export const PostList = () => {
                 setPosts(postsData);
                 setUser(userData);
             } catch (err) {
-                setError("Nie udało się pobrać postów");
+                setError("Failed to retrieve posts");
             } finally {
                 setLoading(false);
             }
@@ -70,11 +71,7 @@ export const PostList = () => {
                 </div>
             </div>
 
-            <CommentsModal
-                post={commentsModal.modalData}
-                isOpen={commentsModal.isOpen}
-                onClose={commentsModal.close}
-            />
+            <CommentsModal post={commentsModal.modalData} isOpen={commentsModal.isOpen} onClose={commentsModal.close}/>
         </>
     );
 };

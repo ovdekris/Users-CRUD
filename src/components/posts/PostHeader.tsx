@@ -7,6 +7,7 @@ interface PostHeaderProps {
     userName?: string;
 }
 
+//Header for post list
 export const PostHeader = ({userName}: PostHeaderProps) => {
     const navigate = useNavigate();
 
